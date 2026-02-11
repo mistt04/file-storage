@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Wrapped</title>
+    <meta name="robots" content="noindex, nofollow">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        @font-face {
+            font-family: 'SpotifyMix';
+            src: url('Spotify Mix Bold.ttf') format('truetype');
+            font-weight: bold;
+        }
+
+        :root {
+            --spotify-black: #191414;
+            --spotify-green: #1DB954;
+            --valentine-pink: #ff4f5e;
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            height: 100%; width: 100%;
+            background-color: var(--spotify-black);
+            font-family: 'SpotifyMix', 'Circular', 'Helvetica', sans-serif;
+            color: white;
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+        }
+
+        .slide {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            scroll-snap-align: start;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #login-overlay {
+            position: fixed; z-index: 100;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--spotify-black);
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        input#passcode {
+            background: #282828; border: 3px solid var(--spotify-green);
+            border-radius: 20px; color: white; font-size: 3.5rem;
+            padding: 15px; width: 260px; text-align: center;
+            font-family: monospace;
+        }
+
+        /* --- Desktop Sizes --- */
+        h1 { font-size: 6rem; font-weight: 900; margin: 0; line-height: 1.1; }
+        h2 { font-size: 3.5rem; margin-bottom: 20px; }
+        .sub-text { font-size: 1.8rem; opacity: 0.9; margin-top: 20px; font-weight: 500; }
+        .stat-number { font-size: 9rem; color: var(--spotify-green); font-weight: 900; line-height: 1; }
+
+        .btn {
+            background: var(--spotify-green); color: white;
+            padding: 20px 60px; border-radius: 50px; border: none;
+            font-weight: bold; font-size: 1.8rem; cursor: pointer;
+            margin-top: 40px;
+        }
+
+        /* --- MOBILE RESPONSIVE FIXES --- */
+        @media (max-width: 600px) {
+            h1 { font-size: 3.2rem; }
+            h2 { font-size: 2.2rem; }
+            .sub-text { font-size: 1.3rem; margin-top: 15px; }
+            .stat-number { font-size: 5rem; }
+            input#passcode { width: 180px; font-size: 2rem; }
+            .btn { padding: 15px 40px; font-size: 1.3rem; }
+            .word-item h1 { font-size: 4rem !important; } /* Fix word slide for mobile */
+            img { width: 95% !important; } /* Make chart fit better */
+        }
+
+        .btn-yes { position: relative; z-index: 5; transition: transform 0.2s ease; }
+        #no-btn { 
+            background: var(--valentine-pink); 
+            position: relative; 
+            transition: all 0.4s ease-out; 
+            z-index: 10;
+            margin-left: 20px;
+        }
+        .word-item { margin: 10px 0; }
+        .word-count { font-size: 1.3rem; opacity: 0.7; }
+    </style>
+</head>
+<body>
+
+    <div id="login-overlay">
+        <div style="text-align: center;">
+            <h1>Our Year.</h1>
+            <p class="sub-text">Enter our anniversary to unlock</p><br>
+            <input type="text" id="passcode" maxlength="5" placeholder="MM/DD" autocomplete="off"><br>
+            <button class="btn" onclick="checkPasscode()">Unlock</button>
+        </div>
+    </div>
+
+    <div id="main-content" style="display:none;">
+        
+        <div class="slide" style="background: linear-gradient(#1DB954, #191414);">
+            <p class="sub-text" style="margin-bottom: 5px;">Surprise!</p>
+            <h1>Wrapped</h1>
+            <p class="sub-text">A year of me + you.</p>
+            <p style="margin-top: 60px; opacity: 0.5; font-size: 1rem;">Scroll down ↓</p>
+        </div>
+
+        <div class="slide">
+            <p class="sub-text">We spent a lot of time talking...</p>
+            <div class="stat-number">21,392</div>
+            <p class="sub-text">messages exchanged.</p>
+        </div>
+
+        <div class="slide">
+            <p class="sub-text">our messaging history</p>
+            <img src="heartbeat.png" style="width: 85%; max-width: 950px; margin-top: 20px; border-radius: 12px; filter: drop-shadow(0 0 15px rgba(29, 185, 84, 0.4));">
+            <p class="sub-text" style="margin-top: 30px; font-weight: 900; color: #1DB954;">lots of texts...</p>
+        </div>
+
+        <div class="slide" style="background: linear-gradient(#191414, #ff4f5e);">
+            <p class="sub-text">Our favorite words</p>
+            <div class="word-item">
+                <h1 style="color: var(--spotify-green);">LOVE</h1>
+                <p class="word-count">1,715 times</p>
+            </div>
+            <div class="word-item">
+                <h1 style="font-size: 3.5rem;">BUB</h1>
+                <p class="word-count">1,661 times</p>
+            </div>
+            <div class="word-item">
+                <h1 style="font-size: 2.8rem;">BUBBY</h1>
+                <p class="word-count">753 times</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <p class="sub-text">We text most at...</p>
+            <div class="stat-number">10 PM</div>
+            <p class="sub-text">Love sleeping on the phone with you</p>
+        </div>
+
+        <div class="slide" id="proposal-slide">
+            <h1>One last thing...</h1>
+            <p class="sub-text" style="margin-bottom: 30px;">The data is clear.</p>
+            <h2>Will you be my Valentine?</h2>
+            <div style="display: flex; gap: 20px; align-items: center; justify-content: center; width: 100%; min-height: 250px;">
+                <button class="btn btn-yes" onclick="celebrate()">YES</button>
+                <button class="btn" id="no-btn" onmouseover="moveNo()" ontouchstart="moveNo()">NO</button>
+            </div>
+            <h2 id="final-msg" style="display:none; color: var(--spotify-green); margin-top: 30px; font-size: 1.8rem; padding: 0 20px;">
+                i'm sorry for not getting this to u earlier,<br>i'll see u soon cutie ❤️
+            </h2>
+        </div>
+    </div>
+
+    <script>
+        const passcodeField = document.getElementById('passcode');
+        passcodeField.addEventListener('input', (e) => {
+            let v = e.target.value.replace(/\D/g, '');
+            if (v.length > 2) v = v.slice(0,2) + '/' + v.slice(2,4);
+            e.target.value = v;
+        });
+
+        function checkPasscode() {
+            if (passcodeField.value === "07/30") { 
+                document.getElementById('login-overlay').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+            } else {
+                alert("Incorrect date! Try again ❤️");
+            }
+        }
+
+        let yesSize = 1;
+        function moveNo() {
+            const btn = document.getElementById('no-btn');
+            const yesBtn = document.querySelector('.btn-yes');
+
+            if (btn.style.position !== 'absolute') {
+                btn.style.position = 'absolute';
+            }
+
+            const padding = 80; 
+            const newX = Math.random() * (window.innerWidth - padding * 2) + padding;
+            const newY = Math.random() * (window.innerHeight - padding * 2) + padding;
+
+            btn.style.left = newX + 'px';
+            btn.style.top = newY + 'px';
+
+            yesSize += 0.2; 
+            yesBtn.style.transform = `scale(${yesSize})`;
+        }
+
+        function celebrate() {
+            document.getElementById('final-msg').style.display = 'block';
+            document.getElementById('no-btn').style.display = 'none';
+            
+            var end = Date.now() + (6 * 1000); 
+            var colors = ['#ff4f5e', '#ffffff', '#1DB954'];
+
+            (function frame() {
+              confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0 }, colors: colors });
+              confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1 }, colors: colors });
+              if (Date.now() < end) { requestAnimationFrame(frame); }
+            }());
+        }
+    </script>
+</body>
+</html>
